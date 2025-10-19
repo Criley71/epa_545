@@ -2,7 +2,7 @@ Django==4.2.7
 dj-database-url==1.0.0
 django-environ==0.11.2
 psycopg2-binary==2.9.9
-gunicorn==22.1.0
+gunicorn
 requests==2.31.0
 pandas==2.2.2
 mercury==2.4.3
