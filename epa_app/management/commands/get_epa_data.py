@@ -88,7 +88,7 @@ class Command(BaseCommand):
           continue  # skip this chunk and move on
         # Insert only rows that are not already in the DB
         for entry in data.get("Data", []):
-          if not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='NO2 1-hour 2010').exists():
+          if (not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='NO2 1-hour 2010').exists()) and entry.get("pollutant_standard") == 'NO2 1-hour 2010':
             SiteAqiData.objects.create(
                 site_id=site_id,
                 state=entry.get("state", "unknown"),
@@ -138,7 +138,7 @@ class Command(BaseCommand):
             continue  # skip this chunk and move on
           # Insert only rows that are not already in the DB
           for entry in data.get("Data", []):
-            if not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='CO 8-hour 1971').exists():
+            if (not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='CO 8-hour 1971').exists()) and entry.get("pollutant_standard") == 'CO 8-hour 1971':
               SiteAqiData.objects.create(
                   site_id=site_id,
                   state=entry.get("state", "unknown"),
@@ -158,7 +158,7 @@ class Command(BaseCommand):
           bdate_obj = datetime.strptime(bdate, "%Y%m%d").date()
           edate_obj = datetime.strptime(edate, "%Y%m%d").date()
           # Check if there are already entries for this site and date range
-          existing = SiteAqiData.objects.filter(site_id=site_id, date__range=[bdate_obj, edate_obj], pollutant='Carbon Monoxide (CO)')
+          existing = SiteAqiData.objects.filter(site_id=site_id, date__range=[bdate_obj, edate_obj], pollutant='PM25 24-hour 2006')
           if existing.exists():
             print(f"Skipping {site_id} from {bdate} to {edate} (already in DB)")
             continue  # skip only this date range, not the whole site
@@ -186,7 +186,7 @@ class Command(BaseCommand):
             continue  # skip this chunk and move on
           # Insert only rows that are not already in the DB
           for entry in data.get("Data", []):
-            if not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='PM25 24-hour 2006').exists():
+            if (not SiteAqiData.objects.filter(site_id=site_id, date=entry['date_local'], pollutant='PM25 24-hour 2006').exists()) and entry.get("pollutant_standard") == 'PM25 24-hour 2006':
               SiteAqiData.objects.create(
                   site_id=site_id,
                   state=entry.get("state", "unknown"),
