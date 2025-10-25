@@ -22,7 +22,7 @@ def generate_year_chunks(start_date_str, end_year=2024):
     start_date_str: CSV start date in 'm/d/y' format
     Returns a list of (bdate, edate) tuples in YYYYMMDD format
     """
-    start_date = datetime.strptime(start_date_str, "%m/%d/%y")
+    start_date = datetime.strptime(start_date_str.strip(), "%m/%d/%Y")
     chunks = []
 
     # First chunk: start_date → Dec 31 of that year
@@ -98,8 +98,7 @@ class Command(BaseCommand):
                 units=entry.get("units_of_measure", "unknown"),
                 date=entry.get("date_local")
             )
-        
-      
+            
     for _, row in site_df.iterrows():
       print('test')
       state, county, site = row['AQS ID'].split('-')
@@ -149,6 +148,7 @@ class Command(BaseCommand):
                 units=entry.get("units_of_measure", "unknown"),
                 date=entry.get("date_local")
             )
+    
     for _, row in site_df.iterrows():
       print('test')
       state, county, site = row['AQS ID'].split('-')
