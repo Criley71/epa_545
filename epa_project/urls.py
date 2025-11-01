@@ -16,18 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from epa_app.views import SiteMetaDataViewSet, SiteAqiDataList
-from rest_framework import routers
+from epa_app.views import SiteMetaDataViewSet, SiteAqiDataViewSet
+from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
-router.register(r"sitemetadata", SiteMetaDataViewSet)
-# router.register(r"data", SiteAqiDataList)
+router.register(r'sitemetadata', SiteMetaDataViewSet)
+
+# Nested router: /sitemetadata/<site_id>/data/
+sites_router = routers.NestedDefaultRouter(router, r'sitemetadata', lookup='sitemetadata')
+sites_router.register(r'data', SiteAqiDataViewSet, basename='sitemetadata-data')
 
 urlpatterns = [
     path('', include(router.urls)),
-    
-    path(r"data/", SiteAqiDataList.as_view(), name='aqi-data'),
+    path('', include(sites_router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-
 ]

@@ -40,3 +40,24 @@ python manage.py runserver
 8. To get all site data run (note this will take roughly 18 hours if using a local sql table, remote providers add rate limits on top of the EPA rate limit):
 
 `python manage.py get_epa_data`
+
+
+# REST API USAGE
+
+### Meta Data
+| URL                        | Method    | Description               |
+| -------------------------- | --------- | ------------------------- |
+| `/sitemetadata/`           | GET       | List all sites            |
+| `/sitemetadata/`           | POST      | Create a new site         |
+| `/sitemetadata/<site_id>/` | GET       | Get metadata for one site |
+| `/sitemetadata/<site_id>/` | PUT/PATCH | Update site metadata      |
+| `/sitemetadata/<site_id>/` | DELETE    | Delete site metadata      |
+
+### Site
+ | URL                                      | Method    | Description                   | Query Params                                           |
+| ---------------------------------------- | --------- | ----------------------------- | ------------------------------------------------------ |
+| `/sitemetadata/<site_id>/data/`          | GET       | List all AQI data for a site  | `start_date`, `end_date`, `pollutant`                  |
+| `/sitemetadata/<site_id>/data/`          | POST      | Create AQI data for that site | `site_id`, `date`, `pollutant`, `value`, `units`, etc. |
+| `/sitemetadata/<site_id>/data/<aqi_id>/` | GET       | Get one AQI data entry        | -                                                      |
+| `/sitemetadata/<site_id>/data/<aqi_id>/` | PUT/PATCH | Update one AQI data entry     | -                                                      |
+| `/sitemetadata/<site_id>/data/<aqi_id>/` | DELETE    | Delete one AQI data entry     | -                                                      |
