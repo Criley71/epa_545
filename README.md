@@ -61,3 +61,9 @@ python manage.py runserver
 | `/sitemetadata/<site_id>/data/<aqi_id>/` | GET       | Get one AQI data entry        | -                                                      |
 | `/sitemetadata/<site_id>/data/<aqi_id>/` | PUT/PATCH | Update one AQI data entry     | -                                                      |
 | `/sitemetadata/<site_id>/data/<aqi_id>/` | DELETE    | Delete one AQI data entry     | -                                                      |
+
+example for site 13-089-0003, start date 2023-01-01, and end date 2023-06-30:
+
+
+`GET /sitemetadata/13-089-0003/data/?start_date=2023-01-01&end_date=2023-06-30`
+
